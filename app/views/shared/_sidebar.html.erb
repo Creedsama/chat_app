@@ -1,0 +1,25 @@
+ <div id="wrapper">
+      <!-- Sidebar -->
+      <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+          <li class="sidebar-brand">
+            <a href="#">
+              CIALFO
+            </a>
+          </li>
+          <li>
+            <%= link_to "Home", root_path %>
+          </li>
+          <% if controller.controller_name == "conversations" %>
+            <% Conversation.or({sender_id: current_user.id}, {recipient_id: current_user.id}).order("created_at DESC").each do |conversation| %>
+              <li><%= link_to "#{conversation.recipient.name}", conversation %></li>
+            <% end %>
+          <% else %>
+            <li>
+              <%= link_to "Inbox", conversations_path %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+      <!-- /#sidebar-wrapper -->
+
